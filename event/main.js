@@ -7,9 +7,14 @@ const btn = document.getElementsByClassName('btn btn-primary')
 console.log('btn:', btn) // HTMLCollection: array
 const formTag = document.getElementsByTagName('form')
 console.log('formTag:', formTag) // HTMLCollection: array
-const list = document.getElementById('list')
+
 const behavior = document.getElementsByClassName('behavior')
 console.log('behavior:', behavior)
+const btn1 = document.getElementById('btn1')
+const btn2 = document.getElementById('btn2')
+const formDispatch = document.getElementById('form-event-dispatch')
+
+
 // ======== Event handler ==========
 const btnClickHandler = function (event) {
   console.log('event.target:', event.target) // button.btn.btn-primary.ml-3
@@ -44,3 +49,29 @@ behavior[0].addEventListener('click', e => {
     e.target.value++
   }
 })
+
+// Set up event and dispatch event 
+const bubblesClick1 = new Event('click', {
+  bubbles: true
+});
+const bubblesClick2 = new Event('click');  // bubbles 預設是 false
+
+btn1.dispatchEvent(bubblesClick1)
+btn2.dispatchEvent(bubblesClick2)
+
+const dispatchHandler = (e) => {
+  e.stopPropagation()
+  switch (e.target.id) {
+    case 'btn1':
+      console.log('I am btn1')
+      break;
+    case 'btn2':
+      console.log('I am btn2')
+      /* do something if btn2 click */
+      break;
+    default:
+      break;
+  }
+}
+
+formDispatch.addEventListener('submit', dispatchHandler)
